@@ -12,14 +12,12 @@ public class TapParser {
 
     public TapEntity parseToTapEntity(String line) throws ParseException {
         if (Objects.isNull(line) || line.trim().length() == 0) {
-            //返回null
             return null;
         }
 
         String[] itemAttrs = line.split(SEPARATOR);
 
         if (itemAttrs.length != 7) {
-            //抛出异常
             throw new IllegalArgumentException("Item format is not correct: " + line);
         }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

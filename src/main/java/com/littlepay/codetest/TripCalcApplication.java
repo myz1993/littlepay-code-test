@@ -13,15 +13,19 @@ import com.opencsv.CSVWriter;
 import java.io.FileWriter;
 
 public class TripCalcApplication{
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException {
         BufferedReader csvReader = new BufferedReader(new FileReader("taps.csv"));
         String line;
 
         TripProcessor tripProcessor = new TripProcessor();
 
         while ((line = csvReader.readLine()) != null) {
-            TapEntity currentTapEntity = new TapParser().parseToTapEntity(line);
-            tripProcessor.process(currentTapEntity);
+            try{
+                TapEntity currentTapEntity = new TapParser().parseToTapEntity(line);
+                tripProcessor.process(currentTapEntity);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         List<TripEntity> tripEntities = tripProcessor.getTripEntities();
 

@@ -7,7 +7,6 @@ import com.littlepay.codetest.model.TripEntity;
 public class TripEntityParser {
     public String[] parseToString(TripEntity tripEntity) throws ParseException {
         if (Objects.isNull(tripEntity)) {
-            //返回nulls
             return null;
         }
 
