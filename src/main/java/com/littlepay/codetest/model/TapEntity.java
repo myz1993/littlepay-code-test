@@ -1,19 +1,20 @@
 package com.littlepay.codetest.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
+@Builder
 public class TapEntity {
     private final int id;
     private final Date dateTimeUtc;
-    private final String tapType;
-    private final String stopId;
+    private final TapType tapType;
+    private final StopId stopId;
     private final String companyId;
-    private final String BusId;
-    private final String Pan;
+    private final String busId;
+    private final String pan;
 
 }

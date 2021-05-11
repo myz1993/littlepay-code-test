@@ -7,13 +7,15 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import com.littlepay.codetest.model.TapEntity;
-import com.littlepay.codetest.model.TripEntity;
-import com.littlepay.codetest.utils.TripProcessor;
+import com.littlepay.codetest.model.Trip;
+import com.littlepay.codetest.parsers.TapParser;
+import com.littlepay.codetest.parsers.TripOutputParser;
 import com.opencsv.CSVWriter;
 import java.io.FileWriter;
 
 public class TripCalcApplication{
     public static void main(String[] args) throws IOException {
+
         BufferedReader csvReader = new BufferedReader(new FileReader("taps.csv"));
         String line;
 
@@ -27,23 +29,21 @@ public class TripCalcApplication{
                 e.printStackTrace();
             }
         }
-        List<TripEntity> tripEntities = tripProcessor.getTripEntities();
+        List<Trip> allTripLists = tripProcessor.getAllTripLists();
+
+        TripOutputParser tripOutputParser = new TripOutputParser();
 
         List<String[]> csvData = new ArrayList<>();
-        TripEntityParser tripEntityParser = new TripEntityParser();
-        tripEntities.stream().forEach(tripEntity -> {
-            try {
-                String[] outPutTripSummary = tripEntityParser.parseToString(tripEntity);
-                csvData.add(outPutTripSummary);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+        allTripLists.stream().forEach(trip -> {
+            String[] outPutTripSummary = new String[0];
+            outPutTripSummary = tripOutputParser.parseToString(trip.getTripOutPut());
+            csvData.add(outPutTripSummary);
         });
 
         try (CSVWriter writer = new CSVWriter(new FileWriter("trips.csv"))) {
             writer.writeAll(csvData);
         }
-
 
         csvReader.close();
     }
